@@ -1,5 +1,5 @@
-# Rm
-Analisi del tool rm.
+# rm
+Analisi del tool `rm`.
 
 ### Descrizione
 `rm` è un tool che permette ("unlinkare") di eliminare dei file dal filesystem.  
