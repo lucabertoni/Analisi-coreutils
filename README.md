@@ -19,7 +19,7 @@ Una prima parte è costituita da una `descrizione` generale del comando con even
 ## Utilities analizzate
 
 ## Come applicare modifiche alla repository
-Per applicare modifiche alla repository, aggiungere nuovi file o eseguire altre operazioni, è necessario "forkare" la libreria tramite l'apposito bottone `fork` presente qui sopra e poi creare una pull request che verrà poi accettata o scartata in base ad un'attenta valutazione (necessaria per la verifica della presenza di eventuali errori).
+Per applicare modifiche alla repository, aggiungere nuovi file o eseguire altre operazioni, è necessario "forkare" la libreria tramite l'apposito bottone `fork` presente qui sopra e poi creare una pull request che verrà accettata o scartata in base ad un'attenta valutazione (necessaria per la verifica della presenza di eventuali errori).
 
 ## Contatti
 - [Email](mailto:luca.bertoni24@gmail.com "Invia una mail")
