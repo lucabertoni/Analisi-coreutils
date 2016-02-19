@@ -51,9 +51,32 @@ rm [OPTION]... FILE...
 
 ### Analisi del codice
 Il codice di `rm` si trova [qui](http://git.savannah.gnu.org/cgit/coreutils.git/tree/src/rm.c).  
-La repository git che contiene tutte le coreutils è reperibile al seguente indirizzo: [http://git.savannah.gnu.org/cgit/coreutils.git/tree/src/rm.c](http://git.savannah.gnu.org/cgit/coreutils.git/tree "Repository git di coreutils"). I sorgenti dei programmi sono situati nella sottocartella `src/`.
-Passiamo ora all'analisi del codice.
+La repository git che contiene tutte le coreutils è reperibile al seguente indirizzo: [http://git.savannah.gnu.org/cgit/coreutils.git/tree](http://git.savannah.gnu.org/cgit/coreutils.git/tree "Repository git di coreutils"). I sorgenti dei programmi sono situati nella sottocartella `src/`.
 
+Passiamo ora all'analisi del codice.  
+Il file che contiene il `main` è `rm.c`.  
+Come prima parte di codice, oltre ai commenti di intestazione, troviamo le seguenti diciture:
+```c
+
+#include <config.h>
+#include <stdio.h>
+#include <getopt.h>
+#include <sys/types.h>
+#include <assert.h>
+
+#include "system.h"
+#include "argmatch.h"
+#include "error.h"
+#include "remove.h"
+#include "root-dev-ino.h"
+#include "yesno.h"
+#include "priv-set.h"
+
+```
+Gli include sono necessari per includere determinate librerie utili al funzionamento del programma.  
+- `getopt.h` è utilizzato per il parse (getopt_long) delle opzioni invocate dalla riga di comando (es: `-I`, `--recursive`).  
+- `types.h` è necessario per la definizione di alcuni tipi di dato.  
+- `remove.h` contiene le funzioni che eseguono la chiamata di sistema per l'unlinking("cancellazione") dal file dal filesystem.
 
 
 ### Manuale di rm
@@ -63,11 +86,11 @@ E' possibile leggere il manuale ufficiale di `rm` al seguente link: [manuale](ht
 Paul  Rubin, David MacKenzie, Richard M. Stallman, e Jim Meyering.
 
 ### Link utili per riportare eventuali bug del software
-GNU coreutils online help: <http://www.gnu.org/software/coreutils/>
+GNU coreutils online help: <http://www.gnu.org/software/coreutils/>  
 Report rm translation bugs to <http://translationproject.org/team/>
 
 ### Copyright di rm
 Copyright © 2014 Free Software Foundation, Inc.   License  GPLv3+:  GNU  
 GPL version 3 or later <http://gnu.org/licenses/gpl.html>.  
 This  is  free  software:  you  are free to change and redistribute it.  
-There is NO WARRANTY, to the extent permitted by law.  
+There is NO WARRANTY, to the extent permitted by law.
