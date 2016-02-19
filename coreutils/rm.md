@@ -76,7 +76,7 @@ Come prima parte di codice, oltre ai commenti di intestazione, troviamo le segue
 Gli include sono necessari per includere determinate librerie utili al funzionamento del programma.  
 - `getopt.h` è utilizzato per il parse (getopt_long) delle opzioni invocate dalla riga di comando (es: `-I`, `--recursive`).  
 - `types.h` è necessario per la definizione di alcuni tipi di dato.  
-- `remove.h` contiene le funzioni che eseguono la chiamata di sistema per l'unlinking("cancellazione") dal file dal filesystem.
+- `remove.h` contiene le funzioni che eseguono la chiamata di sistema per l'unlinking("cancellazione") del file dal filesystem.
 
 Viene poi definito il nome ufficiale del programma:
 ```c
