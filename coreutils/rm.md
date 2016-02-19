@@ -78,6 +78,21 @@ Gli include sono necessari per includere determinate librerie utili al funzionam
 - `types.h` è necessario per la definizione di alcuni tipi di dato.  
 - `remove.h` contiene le funzioni che eseguono la chiamata di sistema per l'unlinking("cancellazione") dal file dal filesystem.
 
+Viene poi definito il nome ufficiale del programma:
+```c
+#define PROGRAM_NAME "rm"
+```
+
+E gli autori:
+```c
+#define AUTHORS \
+  proper_name ("Paul Rubin"), \
+  proper_name ("David MacKenzie"), \
+  proper_name ("Richard M. Stallman"), \
+  proper_name ("Jim Meyering")
+```
+`proper_name` è una direttiva per l'utility [`gettext`](http://linux.die.net/man/1/gettext "Manuale di gettext") che si occupa della traduzione dei messaggi. E' necessario per indicare in quale modo devono essere eventualmente tradotti i nomi in altre lingue (viene utilizzato quando si hanno caratteri "strani" e non codificabili in una situazione normale).
+
 
 ### Manuale di rm
 E' possibile leggere il manuale ufficiale di `rm` al seguente link: [manuale](http://linux.die.net/man/1/rm "Manuale di rm").
