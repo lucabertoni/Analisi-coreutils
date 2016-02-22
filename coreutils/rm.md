@@ -93,6 +93,80 @@ E gli autori:
 ```
 `proper_name` è una direttiva per l'utility [`gettext`](http://linux.die.net/man/1/gettext "Manuale di gettext") che si occupa della traduzione dei messaggi. E' necessario per indicare in quale modo devono essere eventualmente tradotti i nomi in altre lingue (viene utilizzato quando si hanno caratteri "strani" e non codificabili in una situazione normale).
 
+Vengono poi create alcune strutture ed enumerazioni (`enum`).
+```c
+enum
+{
+  INTERACTIVE_OPTION = CHAR_MAX + 1,
+  ONE_FILE_SYSTEM,
+  NO_PRESERVE_ROOT,
+  PRESERVE_ROOT,
+  PRESUME_INPUT_TTY_OPTION
+};
+```
+Contiene la lista di opzioni "long" (es: `--interactive`) che `rm` prende da riga di comando che non hanno un equivalente "short" (es: `-r` per `--recursive`).
+
+```c
+static struct option const long_opts[] =
+{
+  {"force", no_argument, NULL, 'f'},
+  {"interactive", optional_argument, NULL, INTERACTIVE_OPTION},
+
+  {"one-file-system", no_argument, NULL, ONE_FILE_SYSTEM},
+  {"no-preserve-root", no_argument, NULL, NO_PRESERVE_ROOT},
+  {"preserve-root", no_argument, NULL, PRESERVE_ROOT},
+
+  /* This is solely for testing.  Do not document.  */
+  /* It is relatively difficult to ensure that there is a tty on stdin.
+     Since rm acts differently depending on that, without this option,
+     it'd be harder to test the parts of rm that depend on that setting.  */
+  {"-presume-input-tty", no_argument, NULL, PRESUME_INPUT_TTY_OPTION},
+
+  {"recursive", no_argument, NULL, 'r'},
+  {"dir", no_argument, NULL, 'd'},
+  {"verbose", no_argument, NULL, 'v'},
+  {GETOPT_HELP_OPTION_DECL},
+  {GETOPT_VERSION_OPTION_DECL},
+  {NULL, 0, NULL, 0}
+};
+```
+Questa struct è un match delle opzioni "long" con le equivalenti "short", per esempio: `--force` con `-f` o `--recursive` con `-r`.
+
+```c
+static char const *const interactive_args[] =
+{
+  "never", "no", "none",
+  "once",
+  "always", "yes", NULL
+};
+```
+La struct descritta qui sopra serve invece per definire quali parametri può assumere l'opzione `--interactive`, il che significa che da riga di comando possiamo usare `--interactive=never`, `--interactive=always` e così via.
+
+```c
+static enum interactive_type const interactive_types[] =
+{
+  interactive_never, interactive_never, interactive_never,
+  interactive_once,
+  interactive_always, interactive_always
+};
+```
+L'enumerazione descritta qui sopra serve per assegnare un valore numerico (intero, partendo da 0) ai parametri di `--interactive` per avere un match con quelle in versione stringa create sopra.
+
+```c
+ARGMATCH_VERIFY (interactive_args, interactive_types);
+n```
+Viene poi verificata la corrispondenza degli argomenti.  
+Sono riuscito a trovare la dichiarazione della funzione `ARGMATCH_VERIFY` qui: [argmatch.h](http://opensource.apple.com/source/gnutar/gnutar-441/gnutar/lib/argmatch.h), [argmatch.c](http://opensource.apple.com/source/gnutar/gnutar-441/gnutar/lib/argmatch.c).  
+La funzione `ARGMATCH_VERIFY` è definita attraverso il seguente frammento di codice presente in `argmatch.h`:
+```c
+# define ARGMATCH_VERIFY(Arglist, Vallist)				  \
+  struct argmatch_verify						  \
+  {									  \
+    char argmatch_verify[ARGMATCH_CONSTRAINT(Arglist, Vallist) ? 1 : -1]; \
+  }
+```
+Il `#define` precedente ritorna una struct contenente un valore di tipo char che viene generato sulla base dell'eleaborazione della funzione `ARGMATCH_CONSTRAINT` che esegue un controllo sul `sizeof` (diviso per il numero degli elementi) dei parametri (per far si che il match sia corretto il `sizeof` deve risultare uguale), per fare ciò si appoggia alla macro `ARRAY_CARDINALITY` che si occupa di calcolare il numero di elementi presenti negli argomenti (Arglist e Vallist).  
+All'interno del nostro codice non viene fatto alcun controllo sul valore di ritorno.
 
 ### Manuale di rm
 E' possibile leggere il manuale ufficiale di `rm` al seguente link: [manuale](http://linux.die.net/man/1/rm "Manuale di rm").
