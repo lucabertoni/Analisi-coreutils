@@ -154,7 +154,7 @@ L'enumerazione descritta qui sopra serve per assegnare un valore numerico (inter
 
 ```c
 ARGMATCH_VERIFY (interactive_args, interactive_types);
-n```
+```
 Viene poi verificata la corrispondenza degli argomenti.  
 Sono riuscito a trovare la dichiarazione della funzione `ARGMATCH_VERIFY` qui: [argmatch.h](http://opensource.apple.com/source/gnutar/gnutar-441/gnutar/lib/argmatch.h), [argmatch.c](http://opensource.apple.com/source/gnutar/gnutar-441/gnutar/lib/argmatch.c).  
 La funzione `ARGMATCH_VERIFY` è definita attraverso il seguente frammento di codice presente in `argmatch.h`:
